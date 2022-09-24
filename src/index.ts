@@ -1,11 +1,9 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Application } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import * as dotenv from 'dotenv';
 import routes from './routes';
 import errorMiddleware from './middlewares/errorMiddleware';
-
-dotenv.config();
+import database from './database';
 
 const app: Application = express();
 
@@ -19,6 +17,20 @@ app.use(routes);
 
 // use the error middleware
 app.use(errorMiddleware);
+
+// connect to database
+database.connect().then((client) => {
+  return client
+    .query('SELECT now()')
+    .then((res) => {
+      client.release();
+      console.log(res.rows);
+    })
+    .catch((err: Error) => {
+      client.release();
+      console.log(err);
+    });
+});
 
 // start express server
 app.listen(port, () => {

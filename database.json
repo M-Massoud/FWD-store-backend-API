@@ -1,0 +1,16 @@
+{
+  "dev": {
+    "driver": "pg",
+    "host": { "ENV": "PGHOST" },
+    "database": "fwd_store_dev",
+    "user": { "ENV": "PGUSER" },
+    "password": { "ENV": "PGPASSWORD" }
+  },
+  "test": {
+    "driver": "pg",
+    "host": { "ENV": "PGHOST" },
+    "database": "fwd_store_test",
+    "user": { "ENV": "PGUSER" },
+    "password": { "ENV": "PGPASSWORD" }
+  }
+}
