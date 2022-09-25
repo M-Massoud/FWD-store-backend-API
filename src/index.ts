@@ -2,8 +2,7 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import routes from './routes';
-import errorMiddleware from './middlewares/errorMiddleware';
-import database from './database';
+import errorMiddleware from './middlewares/error.middleware';
 
 const app: Application = express();
 
@@ -17,20 +16,6 @@ app.use(routes);
 
 // use the error middleware
 app.use(errorMiddleware);
-
-// connect to database
-database.connect().then((client) => {
-  return client
-    .query('SELECT now()')
-    .then((res) => {
-      client.release();
-      console.log(res.rows);
-    })
-    .catch((err: Error) => {
-      client.release();
-      console.log(err);
-    });
-});
 
 // start express server
 app.listen(port, () => {

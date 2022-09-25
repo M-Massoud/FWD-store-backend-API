@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 
 // import routes
-import users from './api/usersRoute';
+import users from './api/users.route';
 
 const routes = express.Router();
 

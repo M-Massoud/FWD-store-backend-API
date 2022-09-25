@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import IError from '../interfaces/errorInterfade';
+import IError from '../interfaces/error.interface';
 
 // error handling middleware
 const errorMiddleware = (
