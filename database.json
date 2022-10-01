@@ -1,4 +1,5 @@
 {
+  "defaultENV": { "ENV": "dev" },
   "dev": {
     "driver": "pg",
     "host": { "ENV": "PGHOST" },

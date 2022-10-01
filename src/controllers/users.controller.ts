@@ -51,7 +51,7 @@ export const updateUser = async (
 ) => {
   try {
     const user = await userModel.updateUser(req.body);
-    res.status(200).json({ message: 'user updated successfully', user });
+    res.status(201).json({ message: 'user updated successfully', user });
   } catch (error) {
     next(error);
   }

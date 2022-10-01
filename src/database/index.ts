@@ -4,7 +4,10 @@ import { Pool } from 'pg';
 const pool = new Pool({
   user: envConfig.PGUSER,
   host: envConfig.PGHOST,
-  database: envConfig.PGDATABASE,
+  database:
+    envConfig.ENV === 'dev'
+      ? envConfig.PGDATABASE_DEV
+      : envConfig.PGDATABASE_TEST,
   password: envConfig.PGPASSWORD,
   port: Number(envConfig.PGPORT),
 });

@@ -12,7 +12,8 @@ users
 
 users
   .route('/users/:id')
-  .get(checkToken, usersController.getUser)
+  .get(usersController.getUser)
+  // .get(checkToken, usersController.getUser)
   .delete(usersController.deleteUser);
 
 users.route('/login').post(usersController.authenticateUser);

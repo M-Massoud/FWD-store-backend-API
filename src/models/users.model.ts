@@ -32,7 +32,7 @@ class UserModel {
   async getUser(id: number): Promise<Iusers> {
     try {
       const connection = await database.connect();
-      const query = `SELECT id,firstname,lastname FROM users where id=($1)`;
+      const query = `SELECT id,firstname,lastname,email FROM users where id=($1)`;
 
       const result = await connection.query(query, [id]);
 
