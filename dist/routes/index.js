@@ -7,10 +7,12 @@ var express_1 = __importDefault(require("express"));
 // import routes
 var users_route_1 = __importDefault(require("./api/users.route"));
 var products_route_1 = __importDefault(require("./api/products.route"));
+var orders_route_1 = __importDefault(require("./api/orders.route"));
 var routes = express_1.default.Router();
 routes.get('/', function (req, res) {
     res.send('welcome to the home page!');
 });
 routes.use(users_route_1.default);
 routes.use(products_route_1.default);
+routes.use(orders_route_1.default);
 exports.default = routes;

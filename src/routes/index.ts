@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 // import routes
 import users from './api/users.route';
 import products from './api/products.route';
+import orders from './api/orders.route';
 
 const routes = express.Router();
 
@@ -12,5 +13,6 @@ routes.get('/', (req: Request, res: Response) => {
 
 routes.use(users);
 routes.use(products);
+routes.use(orders);
 
 export default routes;
