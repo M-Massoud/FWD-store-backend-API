@@ -71,8 +71,8 @@ describe('test product methods', () => {
     expect(response.status).toBe(201);
   });
 
-  it('test delete one user', async () => {
-    const response = await request.delete('/users/1');
+  it('test delete one product', async () => {
+    const response = await request.delete('/products/1');
     expect(response.status).toBe(200);
   });
 });

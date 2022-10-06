@@ -9,13 +9,22 @@ const userModel = new UserModel();
 
 // create a user to test on
 describe('test user methods', () => {
+  beforeAll(async () => {
+    await userModel.createUser({
+      firstname: 'first',
+      lastname: 'last',
+      email: 'test1@example.com',
+      password: '12345',
+    });
+  });
+
   it('test create new user', async () => {
     const response = await request
       .post('/users')
       .send({
         firstname: 'first',
         lastname: 'last',
-        email: 'test@example.com',
+        email: 'test2@example.com',
         password: '12345',
       })
       .set('Accept', 'application/json');
@@ -28,7 +37,7 @@ describe('test user methods', () => {
       .post('/login')
       .set('Accept', 'application/json')
       .send({
-        email: 'test@example.com',
+        email: 'test1@example.com',
         password: '12345',
       });
     expect(response.status).toBe(200);
@@ -40,21 +49,15 @@ describe('test user methods', () => {
     expect(Array.isArray(response.body.users)).toBe(true);
   });
 
-  it('test get all users', async () => {
-    const response = await request.get('/users');
-    expect(response.status).toBe(200);
-    expect(Array.isArray(response.body.users)).toBe(true);
-  });
-
   it('test get one user', async () => {
-    const response = await request.get('/users/1');
-    console.log(response);
+    const response = await request.get('/users/2');
+    // console.log(response);
     expect(response.status).toBe(200);
     expect(response.body.user).toEqual({
-      id: 1,
+      id: 2,
       firstname: 'first',
       lastname: 'last',
-      email: 'test@example.com',
+      email: 'test2@example.com',
     });
   });
 
@@ -62,10 +65,10 @@ describe('test user methods', () => {
     const response = await request
       .patch('/users')
       .send({
-        id: 1,
+        id: 2,
         firstname: 'first',
         lastname: 'lastupdated',
-        email: 'test@example.com',
+        email: 'test2@example.com',
         password: '12345',
       })
       .set('Accept', 'application/json');
@@ -74,7 +77,7 @@ describe('test user methods', () => {
   });
 
   it('test delete one user', async () => {
-    const response = await request.delete('/users/1');
+    const response = await request.delete('/users/2');
     expect(response.status).toBe(200);
   });
 });

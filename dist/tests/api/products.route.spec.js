@@ -130,11 +130,11 @@ describe('test product methods', function () {
             }
         });
     }); });
-    it('test delete one user', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('test delete one product', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.delete('/users/1')];
+                case 0: return [4 /*yield*/, request.delete('/products/1')];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
