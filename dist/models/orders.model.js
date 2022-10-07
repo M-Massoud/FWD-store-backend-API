@@ -113,10 +113,9 @@ var OrdersModel = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        query = 'INSERT INTO orders (user_id,product_id,status,total_price) VALUES ($1,$2,$3,$4) returning *';
+                        query = 'INSERT INTO orders (user_id,status,total_price) VALUES ($1,$2,$3) returning *';
                         return [4 /*yield*/, connection.query(query, [
                                 order.user_id,
-                                order.product_id,
                                 order.status,
                                 order.total_price,
                             ])];
@@ -146,11 +145,10 @@ var OrdersModel = /** @class */ (function () {
                         return [4 /*yield*/, database_1.default.connect()];
                     case 1:
                         connection = _a.sent();
-                        query = 'UPDATE orders SET user_id =$2 ,product_id=$3,status=$4,total_price=$5 WHERE id=$1 returning *';
+                        query = 'UPDATE orders SET user_id =$2 ,status=$3,total_price=$4 WHERE id=$1 returning *';
                         return [4 /*yield*/, connection.query(query, [
                                 order.id,
                                 order.user_id,
-                                order.product_id,
                                 order.status,
                                 order.total_price,
                             ])];

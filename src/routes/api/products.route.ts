@@ -1,17 +1,18 @@
 import express from 'express';
 import * as productsController from '../../controllers/products.controller';
+import checkToken from '../../middlewares/checkToken.middleware';
 
 const products = express.Router();
 
 products
   .route('/products')
   .get(productsController.getAllProducts)
-  .post(productsController.createProduct)
+  .post(checkToken, productsController.createProduct)
   .patch(productsController.updateProduct);
 
 products
   .route('/products/:id')
   .get(productsController.getProduct)
-  .delete(productsController.deleteProduct);
+  .delete(checkToken, productsController.deleteProduct);
 
 export default products;

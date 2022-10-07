@@ -42,8 +42,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../../index"));
 var products_model_1 = __importDefault(require("../../models/products.model"));
+var users_model_1 = __importDefault(require("../../models/users.model"));
+var database_1 = __importDefault(require("../../database"));
 var request = (0, supertest_1.default)(index_1.default);
 var productModel = new products_model_1.default();
+var userModel = new users_model_1.default();
+var token = '';
 describe('all product model methods should be defined', function () {
     it('create product method should be defined ', function () {
         expect(productModel.createProduct).toBeDefined();
@@ -62,6 +66,54 @@ describe('all product model methods should be defined', function () {
     });
 });
 describe('test product methods', function () {
+    beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, userModel.createUser({
+                        firstname: 'first',
+                        lastname: 'last',
+                        email: 'test1@example.com',
+                        password: '12345',
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, productModel.createProduct({ name: 'product 1', price: 99 })];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, request
+                            .post('/login')
+                            .set('Accept', 'application/json')
+                            .send({
+                            email: 'test1@example.com',
+                            password: '12345',
+                        })];
+                case 3:
+                    response = _a.sent();
+                    // console.log(response.body.token);
+                    token = response.body.token;
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    afterAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var connection, sql;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.delete('/users/1').set('Authorization', "Bearer ".concat(token))];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, database_1.default.connect()];
+                case 2:
+                    connection = _a.sent();
+                    sql = 'ALTER SEQUENCE users_id_seq RESTART WITH 1;';
+                    return [4 /*yield*/, connection.query(sql)];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('test create new product', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
@@ -72,7 +124,8 @@ describe('test product methods', function () {
                         name: 'product 1',
                         price: 99,
                     })
-                        .set('Accept', 'application/json')];
+                        .set('Accept', 'application/json')
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
@@ -122,7 +175,8 @@ describe('test product methods', function () {
                         name: 'product 1 updated',
                         price: 199,
                     })
-                        .set('Accept', 'application/json')];
+                        .set('Accept', 'application/json')
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(201);
@@ -134,7 +188,9 @@ describe('test product methods', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.delete('/products/1')];
+                case 0: return [4 /*yield*/, request
+                        .delete('/products/1')
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);

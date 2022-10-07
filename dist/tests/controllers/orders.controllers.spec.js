@@ -41,38 +41,77 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../../index"));
-var orders_model_1 = __importDefault(require("../../models/orders.model"));
+var database_1 = __importDefault(require("../../database"));
+var users_model_1 = __importDefault(require("../../models/users.model"));
 var request = (0, supertest_1.default)(index_1.default);
-var ordersModel = new orders_model_1.default();
-describe('all orders model methods should be defined', function () {
-    it('create product method should be defined ', function () {
-        expect(ordersModel.createOrder).toBeDefined();
-    });
-    it('get all products method should be defined ', function () {
-        expect(ordersModel.getAllOrders).toBeDefined();
-    });
-    it('get one product method should be defined ', function () {
-        expect(ordersModel.getOrder).toBeDefined();
-    });
-    it('update one product method should be defined ', function () {
-        expect(ordersModel.updateOrder).toBeDefined();
-    });
-    it('delete one product method should be defined ', function () {
-        expect(ordersModel.deleteOrder).toBeDefined();
-    });
-});
+var userModel = new users_model_1.default();
+var token = '';
 describe('test orders methods', function () {
+    beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, userModel.createUser({
+                        firstname: 'first',
+                        lastname: 'last',
+                        email: 'test@example.com',
+                        password: '12345',
+                    })];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, request
+                            .post('/login')
+                            .set('Accept', 'application/json')
+                            .send({
+                            email: 'test@example.com',
+                            password: '12345',
+                        })];
+                case 2:
+                    response = _a.sent();
+                    token = response.body.token;
+                    return [4 /*yield*/, request
+                            .post('/products')
+                            .set('Authorization', "Bearer ".concat(token))
+                            .send({
+                            name: 'product 1',
+                            price: 99,
+                        })
+                            .set('Accept', 'application/json')];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    afterAll(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var connection, sql;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.delete('/users/1').set('Authorization', "Bearer ".concat(token))];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, database_1.default.connect()];
+                case 2:
+                    connection = _a.sent();
+                    sql = 'ALTER SEQUENCE users_id_seq RESTART WITH 1;';
+                    return [4 /*yield*/, connection.query(sql)];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('test create new order', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request
                         .post('/orders')
+                        .set('Authorization', "Bearer ".concat(token))
                         .send({
                         user_id: 1,
-                        product_id: 2,
                         status: 'active',
-                        total_price: 90,
+                        total_price: 99,
                     })
                         .set('Accept', 'application/json')];
                 case 1:
@@ -86,7 +125,9 @@ describe('test orders methods', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/orders')];
+                case 0: return [4 /*yield*/, request
+                        .get('/orders')
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);
@@ -99,16 +140,17 @@ describe('test orders methods', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get('/orders/1')];
+                case 0: return [4 /*yield*/, request
+                        .get('/orders/1')
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
                     // console.log(response);
-                    expect(response.status).toBe(200);
                     expect(response.body.order).toEqual({
+                        id: 1,
                         user_id: 1,
-                        product_id: 2,
                         status: 'active',
-                        total_price: 90,
+                        total_price: 99,
                     });
                     return [2 /*return*/];
             }
@@ -122,11 +164,11 @@ describe('test orders methods', function () {
                         .patch('/orders')
                         .send({
                         user_id: 1,
-                        product_id: 2,
                         status: 'active',
-                        total_price: 190,
+                        total_price: 199,
                     })
-                        .set('Accept', 'application/json')];
+                        .set('Accept', 'application/json')
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(201);
@@ -138,7 +180,9 @@ describe('test orders methods', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.delete('/orders/1')];
+                case 0: return [4 /*yield*/, request
+                        .delete('/orders/1')
+                        .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
                     expect(response.status).toBe(200);

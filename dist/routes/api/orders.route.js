@@ -24,14 +24,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var ordersController = __importStar(require("../../controllers/orders.controller"));
+var checkToken_middleware_1 = __importDefault(require("../../middlewares/checkToken.middleware"));
 var products = express_1.default.Router();
 products
     .route('/orders')
-    .get(ordersController.getAllOrders)
-    .post(ordersController.createOrder)
-    .patch(ordersController.updateOrder);
+    .get(checkToken_middleware_1.default, ordersController.getAllOrders)
+    .post(checkToken_middleware_1.default, ordersController.createOrder)
+    .patch(checkToken_middleware_1.default, ordersController.updateOrder);
 products
     .route('/orders/:id')
-    .get(ordersController.getOrder)
-    .delete(ordersController.deleteOrder);
+    .get(checkToken_middleware_1.default, ordersController.getOrder)
+    .delete(checkToken_middleware_1.default, ordersController.deleteOrder);
 exports.default = products;

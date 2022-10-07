@@ -24,14 +24,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var productsController = __importStar(require("../../controllers/products.controller"));
+var checkToken_middleware_1 = __importDefault(require("../../middlewares/checkToken.middleware"));
 var products = express_1.default.Router();
 products
     .route('/products')
     .get(productsController.getAllProducts)
-    .post(productsController.createProduct)
+    .post(checkToken_middleware_1.default, productsController.createProduct)
     .patch(productsController.updateProduct);
 products
     .route('/products/:id')
     .get(productsController.getProduct)
-    .delete(productsController.deleteProduct);
+    .delete(checkToken_middleware_1.default, productsController.deleteProduct);
 exports.default = products;

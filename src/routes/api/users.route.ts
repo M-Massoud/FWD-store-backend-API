@@ -6,15 +6,15 @@ const users = express.Router();
 
 users
   .route('/users')
-  .get(usersController.getAllUsers)
+  .get(checkToken, usersController.getAllUsers)
   .post(usersController.createUser)
-  .patch(usersController.updateUser);
+  .patch(checkToken, usersController.updateUser);
 
 users
   .route('/users/:id')
-  .get(usersController.getUser)
-  // .get(checkToken, usersController.getUser)
-  .delete(usersController.deleteUser);
+  .get(checkToken, usersController.getUser)
+  .delete(checkToken, usersController.deleteUser);
 
 users.route('/login').post(usersController.authenticateUser);
+
 export default users;

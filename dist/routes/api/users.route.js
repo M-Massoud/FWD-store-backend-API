@@ -24,16 +24,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var usersController = __importStar(require("../../controllers/users.controller"));
+var checkToken_middleware_1 = __importDefault(require("../../middlewares/checkToken.middleware"));
 var users = express_1.default.Router();
 users
     .route('/users')
-    .get(usersController.getAllUsers)
+    .get(checkToken_middleware_1.default, usersController.getAllUsers)
     .post(usersController.createUser)
-    .patch(usersController.updateUser);
+    .patch(checkToken_middleware_1.default, usersController.updateUser);
 users
     .route('/users/:id')
-    .get(usersController.getUser)
-    // .get(checkToken, usersController.getUser)
-    .delete(usersController.deleteUser);
+    .get(checkToken_middleware_1.default, usersController.getUser)
+    .delete(checkToken_middleware_1.default, usersController.deleteUser);
 users.route('/login').post(usersController.authenticateUser);
 exports.default = users;

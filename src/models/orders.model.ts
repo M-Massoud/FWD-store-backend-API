@@ -44,11 +44,10 @@ class OrdersModel {
     try {
       const connection = await database.connect();
       const query =
-        'INSERT INTO orders (user_id,product_id,status,total_price) VALUES ($1,$2,$3,$4) returning *';
+        'INSERT INTO orders (user_id,status,total_price) VALUES ($1,$2,$3) returning *';
 
       const result = await connection.query(query, [
         order.user_id,
-        order.product_id,
         order.status,
         order.total_price,
       ]);
@@ -66,12 +65,11 @@ class OrdersModel {
     try {
       const connection = await database.connect();
       const query =
-        'UPDATE orders SET user_id =$2 ,product_id=$3,status=$4,total_price=$5 WHERE id=$1 returning *';
+        'UPDATE orders SET user_id =$2 ,status=$3,total_price=$4 WHERE id=$1 returning *';
 
       const result = await connection.query(query, [
         order.id,
         order.user_id,
-        order.product_id,
         order.status,
         order.total_price,
       ]);
