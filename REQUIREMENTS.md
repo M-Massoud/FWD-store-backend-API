@@ -1,50 +1,91 @@
-# API Requirements
+## API EndPoints
 
-The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
+- users
+  `GET` index all users `/users` [token required]
+  `GET` show one user `/users/<user id>` [token required]
+  `POST` add new user `/users`
 
-These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application.
+```
+{
+    "firstname":"user test 1",
+    "lastname": "user lastname test",
+    "email":"test@test.com",
+    "password": "12345"
+}
+```
 
-## API Endpoints
+`PATCH` edit a user `/users` [token required]
 
-#### Products
+```
+{
+    "id":<user id>,
+    "firstname":"update name",
+    "lastname":"update lastnamewds",
+    "password":"newpass"
+}
+```
 
-- Index
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products
-- [OPTIONAL] Products by category (args: product category)
+`DELETE` to delete a user `/users/<user id>` [token required]
 
-#### Users
+- Login
+  `POST` to login `/login`
 
-- Index [token required]
-- Show [token required]
-- Create [token required]
+```
+{
+    "email":"test@test.com",
+    "password":"12345"
+}
+```
 
-#### Orders
+you will be provided with the token if the email and password are correct so save them and send the token in the headers whenver token is required with your request
 
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- products
+  `GET` index all products `/products`
+  `GET` show one product `/products/<product id>`
+  `POST` add new product `/products` [token required]
 
-## Data Shapes
+```
+  {
+  "name":"product test 1",
+  "price": 99
 
-#### Product
+}
+```
 
-- id
-- name
-- price
-- [OPTIONAL] category
+`PATCH` to update a product `/products` [token required]
 
-#### User
+```
+{
+    "id":1,
+    "name":"update product name",
+    "price":199
+}
+```
 
-- id
-- firstName
-- lastName
-- password
+`DELETE` to delete a product `/products/<product id>` [token required]
 
-#### Orders
+- orders
+  `GET` index all orders `/orders` [token required]
+  `GET` show one order `/orders/<product id>` [token required]
+  `POST` add new order `/orders` [token required]
 
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+```
+  {
+    "user_id":1,
+    "status":"active",
+    "total_price":90
+}
+```
+
+`PATCH` to update an order `/order` [token required]
+
+```
+{
+    "id":1,
+    "user_id": 1,
+    "status": "completed",
+    "total_price": 90
+}
+```
+
+`DELETE` to delete an order `/orders/<order id>` [token required]
