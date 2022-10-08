@@ -20,8 +20,24 @@ an API end points for users,products and orders
 `npm install `
 - run the server
 `npm run start`
+- run the database migration 
+`db-migrate up`
 - run tests
 `npm run test`
 - linting and formating
 `npm run lint`
 `npm run prettier`
+
+## .env sample
+```
+PORT=
+ENV = dev
+PGHOST =
+PGUSER = 
+PGDATABASE_DEV = 
+PGDATABASE_TEST = 
+PGPASSWORD = 
+PGPORT = 
+SALT_ROUNDS= 
+TOKEN_SERCRET = 
+```
