@@ -28,16 +28,28 @@ an API end points for users,products and orders
 `npm run lint`
 `npm run prettier`
 
+## ports
+The application runs on port `3002` and database on `5432`.
+
+
 ## .env sample
 ```
-PORT=
+PORT= 3002
 ENV = dev
-PGHOST =
-PGUSER = 
-PGDATABASE_DEV = 
-PGDATABASE_TEST = 
-PGPASSWORD = 
-PGPORT = 
-SALT_ROUNDS= 
-TOKEN_SERCRET = 
+PGHOST = 'localhost'
+PGUSER = <add your postgress user name>
+PGDATABASE_DEV = fwd_store_dev
+PGDATABASE_TEST = fwd_store_test
+PGPASSWORD = <add your password>
+PGPORT = 5432
+SALT_ROUNDS= 9
+TOKEN_SERCRET = <secret token>
 ```
+create two databases one for the dev and one for testing 
+```
+CREATE DATABASE fwd_store_dev;
+CREATE DATABASE fwd_store_test;
+```
+
+## Endpoints
+check the requirments.md file
