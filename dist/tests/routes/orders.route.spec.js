@@ -150,7 +150,7 @@ describe('test orders methods', function () {
             }
         });
     }); });
-    it('test delete one user', function () { return __awaiter(void 0, void 0, void 0, function () {
+    it('test delete one order', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {

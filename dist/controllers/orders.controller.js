@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrder = exports.updateOrder = exports.createOrder = exports.getOrder = exports.getAllOrders = void 0;
+exports.removeProductFromOrder = exports.addProductToOrder = exports.deleteOrder = exports.updateOrder = exports.createOrder = exports.getOrder = exports.getAllOrders = void 0;
 var orders_model_1 = __importDefault(require("../models/orders.model"));
 var ordersModel = new orders_model_1.default();
 var getAllOrders = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
@@ -142,3 +142,47 @@ var deleteOrder = function (req, res, next) { return __awaiter(void 0, void 0, v
     });
 }); };
 exports.deleteOrder = deleteOrder;
+var addProductToOrder = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, ordersModel.addProductToOrder(req.body.product_id, parseInt(req.params.id), req.body.quantity)];
+            case 1:
+                _a.sent();
+                res
+                    .status(200)
+                    .json({ message: 'product added successfully to the order' });
+                return [3 /*break*/, 3];
+            case 2:
+                error_6 = _a.sent();
+                next(error_6);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.addProductToOrder = addProductToOrder;
+var removeProductFromOrder = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, ordersModel.removeProductFromOrder(Number(req.body.product_id), Number(req.params.id))];
+            case 1:
+                _a.sent();
+                res
+                    .status(200)
+                    .json({ message: 'product deleted successfully from the order' });
+                return [3 /*break*/, 3];
+            case 2:
+                error_7 = _a.sent();
+                next(error_7);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.removeProductFromOrder = removeProductFromOrder;

@@ -21,4 +21,10 @@ describe('all orders model methods should be defined', function () {
     it('delete one product method should be defined ', function () {
         expect(ordersModel.deleteOrder).toBeDefined();
     });
+    it('add product to odrer method should be defined ', function () {
+        expect(ordersModel.addProductToOrder).toBeDefined();
+    });
+    it('delete product from order method should be defined ', function () {
+        expect(ordersModel.removeProductFromOrder).toBeDefined();
+    });
 });

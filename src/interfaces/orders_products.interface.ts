@@ -1,7 +1,8 @@
-interface OrdersProducts {
+interface IOrdersProducts {
   id?: number;
+  product_id: number;
+  order_id: number;
   quantity: number;
-  productId: number;
 }
 
-export default OrdersProducts;
+export default IOrdersProducts;

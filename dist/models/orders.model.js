@@ -195,6 +195,66 @@ var OrdersModel = /** @class */ (function () {
             });
         });
     };
+    // add product to order
+    OrdersModel.prototype.addProductToOrder = function (product_id, order_id, quantity) {
+        return __awaiter(this, void 0, void 0, function () {
+            var connection, query, result, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 4, , 5]);
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        connection = _a.sent();
+                        query = "INSERT INTO orders_products (product_id, order_id,quantity ) VALUES($1, $2, $3) returning *";
+                        return [4 /*yield*/, connection.query(query, [
+                                product_id,
+                                order_id,
+                                quantity,
+                            ])];
+                    case 2:
+                        result = _a.sent();
+                        return [4 /*yield*/, connection.release()];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/, result.rows[0]];
+                    case 4:
+                        error_6 = _a.sent();
+                        console.log(error_6);
+                        throw new Error("can't add the product to order");
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // remove product from order
+    OrdersModel.prototype.removeProductFromOrder = function (product_id, order_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var connection, query, result, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 4, , 5]);
+                        return [4 /*yield*/, database_1.default.connect()];
+                    case 1:
+                        connection = _a.sent();
+                        query = "DELETE FROM orders_products WHERE product_id =($1) AND  order_id =($2) returning *";
+                        return [4 /*yield*/, connection.query(query, [product_id, order_id])];
+                    case 2:
+                        result = _a.sent();
+                        return [4 /*yield*/, connection.release()];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/, result.rows[0]];
+                    case 4:
+                        error_7 = _a.sent();
+                        console.log(error_7);
+                        throw new Error("can't delete the product from order");
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return OrdersModel;
 }());
 exports.default = OrdersModel;

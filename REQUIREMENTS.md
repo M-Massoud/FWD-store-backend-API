@@ -89,3 +89,20 @@ you will be provided with the token if the email and password are correct so sav
 ```
 
 `DELETE` to delete an order `/orders/<order id>` [token required]
+
+`POST` add product to order `/orders/<order id>/addProduct` [token required]
+
+```
+{
+"product_id":<product id>,
+ "quantity":<quantity number>
+}
+```
+
+`DELETE` remove product from order `/orders/<order id>/removeProduct`
+
+```
+{
+  "product_id":<product id>
+}
+```

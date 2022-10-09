@@ -5,6 +5,7 @@
 an API end points for users,products and orders
 
 ## Built with
+
 - Node.js
 - express
 - TypeScript
@@ -14,25 +15,27 @@ an API end points for users,products and orders
 - PostgreSQL
 
 ## Project setup
+
 - clone the GitHub repo
-`git clone https://github.com/M-Massoud/FWD-store-backend-API.git`
-- install all dependencies 
-`npm install `
+  `git clone https://github.com/M-Massoud/FWD-store-backend-API.git`
+- install all dependencies
+  `npm install `
 - run the server
-`npm run start`
-- run the database migration 
-`db-migrate up`
+  `npm run start`
+- run the database migration
+  `db-migrate up`
 - run tests
-`npm run test`
+  `npm run test`
 - linting and formating
-`npm run lint`
-`npm run prettier`
+  `npm run lint`
+  `npm run prettier`
 
 ## ports
+
 The application runs on port `3002` and database on `5432`.
 
-
 ## .env sample
+
 ```
 PORT= 3002
 ENV = dev
@@ -45,11 +48,14 @@ PGPORT = 5432
 SALT_ROUNDS= 9
 TOKEN_SERCRET = <secret token>
 ```
-create two databases one for the dev and one for testing 
+
+create two databases one for the dev and one for testing
+
 ```
 CREATE DATABASE fwd_store_dev;
 CREATE DATABASE fwd_store_test;
 ```
 
 ## Endpoints
-check the requirments.md file
+
+check the REQUIREMENTS.md file

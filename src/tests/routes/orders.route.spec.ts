@@ -72,7 +72,7 @@ describe('test orders methods', () => {
     expect(response.status).toBe(201);
   });
 
-  it('test delete one user', async () => {
+  it('test delete one order', async () => {
     const response = await request
       .delete('/orders/1')
       .set('Authorization', `Bearer ${token}`);

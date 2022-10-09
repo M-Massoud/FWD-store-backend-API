@@ -67,3 +67,40 @@ export const deleteOrder = async (
     next(error);
   }
 };
+
+export const addProductToOrder = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await ordersModel.addProductToOrder(
+      req.body.product_id,
+      parseInt(req.params.id),
+      req.body.quantity
+    );
+    res
+      .status(200)
+      .json({ message: 'product added successfully to the order' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeProductFromOrder = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await ordersModel.removeProductFromOrder(
+      Number(req.body.product_id),
+      Number(req.params.id)
+    );
+    res
+      .status(200)
+      .json({ message: 'product deleted successfully from the order' });
+  } catch (error) {
+    next(error);
+  }
+};
