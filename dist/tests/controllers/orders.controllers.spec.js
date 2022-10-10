@@ -90,12 +90,15 @@ describe('test orders methods', function () {
                 case 0: return [4 /*yield*/, request.delete('/users/1').set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, database_1.default.connect()];
+                    return [4 /*yield*/, request.delete('/orders/1').set('Authorization', "Bearer ".concat(token))];
                 case 2:
-                    connection = _a.sent();
-                    sql = 'ALTER SEQUENCE users_id_seq RESTART WITH 1;';
-                    return [4 /*yield*/, connection.query(sql)];
+                    _a.sent();
+                    return [4 /*yield*/, database_1.default.connect()];
                 case 3:
+                    connection = _a.sent();
+                    sql = 'ALTER SEQUENCE users_id_seq RESTART WITH 1; \nDELETE FROM products; \nALTER SEQUENCE products_id_seq RESTART WITH 1; \nALTER SEQUENCE orders_id_seq RESTART WITH 1;';
+                    return [4 /*yield*/, connection.query(sql)];
+                case 4:
                     _a.sent();
                     return [2 /*return*/];
             }

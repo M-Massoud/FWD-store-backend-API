@@ -39,9 +39,11 @@ describe('test orders methods', () => {
 
   afterAll(async () => {
     await request.delete('/users/1').set('Authorization', `Bearer ${token}`);
+    await request.delete('/orders/1').set('Authorization', `Bearer ${token}`);
 
     const connection = await database.connect();
-    const sql = 'ALTER SEQUENCE users_id_seq RESTART WITH 1;';
+    const sql =
+      'ALTER SEQUENCE users_id_seq RESTART WITH 1; \nDELETE FROM products; \nALTER SEQUENCE products_id_seq RESTART WITH 1; \nALTER SEQUENCE orders_id_seq RESTART WITH 1;';
     await connection.query(sql);
   });
 

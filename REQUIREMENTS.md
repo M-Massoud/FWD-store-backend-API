@@ -106,3 +106,43 @@ you will be provided with the token if the email and password are correct so sav
   "product_id":<product id>
 }
 ```
+
+## database schema
+
+- users
+
+```
+id - SERIAL - PRIMARY KEY
+firstName - VARCHAR(30) -NOT NULL
+lastname - VARCHAR(30) - NOT NULL
+email - VARCHAR(60) - NOT NULL - UNIQUE
+password - VARCHAR(255) - NOT NULL
+```
+
+- products
+
+```
+  id - SERIAL - PRIMARY KEY
+  name - VARCHAR(255) -NOT NULL
+  price - INT -NOT NULL
+```
+
+- orders
+
+```
+type order_status as enum('active', 'completed')
+
+id - SERIAL - PRIMARY KEY,
+user_id - INT - REFERENCES users (id)
+status - order_status
+total_price - INT - NOT NULL
+```
+
+- orders_products
+
+```
+id - SERIAL - PRIMARY KEY
+product_id - INT - REFERENCES  - products (id)
+order_id - INT - REFERENCES orders -  (id)
+quantity -  INT - NOT NULL
+```

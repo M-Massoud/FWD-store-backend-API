@@ -82,12 +82,15 @@ describe('test user methods', function () {
                 case 0: return [4 /*yield*/, request.delete('/users/1').set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, database_1.default.connect()];
+                    return [4 /*yield*/, request.delete('/users/2').set('Authorization', "Bearer ".concat(token))];
                 case 2:
+                    _a.sent();
+                    return [4 /*yield*/, database_1.default.connect()];
+                case 3:
                     connection = _a.sent();
                     sql = 'ALTER SEQUENCE users_id_seq RESTART WITH 1;';
                     return [4 /*yield*/, connection.query(sql)];
-                case 3:
+                case 4:
                     _a.sent();
                     return [2 /*return*/];
             }
@@ -129,4 +132,119 @@ describe('test user methods', function () {
             expect(userModel.authenticateUser).toBeDefined();
         });
     });
+    it('testing user model get all users method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, userModel.getAllUsers()];
+                case 1:
+                    response = _a.sent();
+                    expect(response.length).toBeGreaterThan(0);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('testing user model get one user method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, userModel.getUser(1)];
+                case 1:
+                    response = _a.sent();
+                    // console.log(response);
+                    expect(response.id).toBe(1);
+                    expect(response.firstname).toBe('first');
+                    expect(response.lastname).toBe('last');
+                    expect(response.email).toBe('test@example.com');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('testing user model create user method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var userData, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    userData = {
+                        firstname: 'first',
+                        lastname: 'last',
+                        email: 'test2@example.com',
+                        password: '1234',
+                    };
+                    return [4 /*yield*/, userModel.createUser(userData)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.id).toBe(2);
+                    expect(response.email).toBe('test2@example.com');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('testing user model update user method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var userData, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    userData = {
+                        id: 2,
+                        firstname: 'first updated',
+                        lastname: 'last',
+                        email: 'test2@example.com',
+                        password: '1234',
+                    };
+                    return [4 /*yield*/, userModel.updateUser(userData)];
+                case 1:
+                    response = _a.sent();
+                    expect(response.id).toBe(2);
+                    expect(response.firstname).toBe('first updated');
+                    expect(response.lastname).toBe('last');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('testing user model get one user method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, userModel.getUser(1)];
+                case 1:
+                    response = _a.sent();
+                    // console.log(response);
+                    expect(response.id).toBe(1);
+                    expect(response.firstname).toBe('first');
+                    expect(response.lastname).toBe('last');
+                    expect(response.email).toBe('test@example.com');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('testing user model authenticate user method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, userModel.authenticateUser('test@example.com', '12345')];
+                case 1:
+                    response = _a.sent();
+                    expect(response === null || response === void 0 ? void 0 : response.firstname).toBe('first');
+                    expect(response === null || response === void 0 ? void 0 : response.lastname).toBe('last');
+                    expect(response === null || response === void 0 ? void 0 : response.email).toBe('test@example.com');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('testing user model delete user method', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            expect(function () { return __awaiter(void 0, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, userModel.deleteUser(2)];
+                        case 1:
+                            _a.sent();
+                            return [2 /*return*/];
+                    }
+                });
+            }); }).not.toThrow();
+            return [2 /*return*/];
+        });
+    }); });
 });

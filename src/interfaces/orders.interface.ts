@@ -6,6 +6,6 @@ export enum Status {
 export default interface IOrders {
   id?: number;
   user_id: number;
-  status: Status;
+  status?: Status;
   total_price: number;
 }
